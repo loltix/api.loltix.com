@@ -21,8 +21,8 @@ const options = {
       description:
         "LolTix",
       license: {
-        name: "MIT",
-        url: "https://choosealicense.com/licenses/mit/"
+        name: "None",
+        url: "https://loltix.com"
       },
       contact: {
         name: "Swagger",
@@ -32,7 +32,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:8000/api/v1"
+        url: "http://api.loltix.com:8000/v1"
       }
     ]
   },
