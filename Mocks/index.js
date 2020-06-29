@@ -3,8 +3,6 @@
 const express = require("express");
 const router = express.Router();
 
-const pool = require('../db.js');
-
 // App Modules
 const User = require('../Models/User');
 
@@ -34,13 +32,13 @@ const options = {
     },
     servers: [
       {
-        url: "http://api.loltix.com:8000/v1"
+        url: "http://api.loltix.com:8000/mocks"
       }
     ]
   },
   apis: [
     "./Models/User.js",
-    "./Routes/index.js"
+    "./Mocks/index.js"
   ]
 };
 
@@ -116,7 +114,7 @@ router.get("/users", (req, res, next) => {
 });
 
 
-router.get('/events', async (req, res, next) => {
+router.get('/events', (req, res, next) => {
   let offset = req.query.offset;
   let pageSize = req.query.pageSize;
 
@@ -230,27 +228,10 @@ router.get('/events', async (req, res, next) => {
     events.results = [];
   }
 
-  let conn;
-  try {
-      // establish a connection to MariaDB
-      conn = await pool.getConnection();
-
-      // create a new query
-      var query = "select * from events";
-
-      // execute the query and set the result to a new variable
-      var rows = await conn.query(query);
-
-      // return the results
-      return res.json(rows);
-  } catch (err) {
-      throw err;
-  } finally {
-      if (conn) return conn.release();
-  }
+  res.json(events);
 });
 
-router.get('/events/:id', async (req, res, next) => {
+router.get('/events/:id', (req, res, next) => {
   const eventDetails = [
     {
     name: "Frankie Quinones",
@@ -405,24 +386,13 @@ router.get('/events/:id', async (req, res, next) => {
     }
   }
 ];
-let conn;
-  try {
-      // establish a connection to MariaDB
-      conn = await pool.getConnection();
-
-      // create a new query
-      var query = "select * from events where id = '"+ req.params.id +"'";
-
-      // execute the query and set the result to a new variable
-      var rows = await conn.query(query);
-
-      // return the results
-      return res.json(rows);
-  } catch (err) {
-      throw err;
-  } finally {
-      if (conn) return conn.release();
-  }
+if(req.params.id == '123') {
+  res.json(eventDetails[0]);
+} else if(req.params.id == '124') {
+  res.json(eventDetails[1]);
+} else {
+  res.sendStatus(404);
+}
   
 });
 
