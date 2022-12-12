@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/loltix/loltix-api#readme",
   "dependencies": {
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "mariadb": "^2.3.1",
     "nodemailer": "^4.6.8",
     "nodemon": "^1.18.3",
